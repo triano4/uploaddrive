@@ -78,12 +78,18 @@ func Client() {
 
 				log.Printf("Dump file %s", params["name"])
 
-				if fErr := ioutil.WriteFile(params["name"], c, 0777); fErr != nil {
+				// err := os.Mkdir("attacment1", 0755)
+				// if err != nil {
+				// 	log.Fatal(err)
+				// }
+
+				if fErr := ioutil.WriteFile("attachment/"+params["name"], c, 0777); fErr != nil {
 					log.Fatal(fErr)
 				}
-				var filenams = params["name"]
 
-				UploadFile("UploadDrive", filenams)
+				// var filenams = "./attachment/" + params["name"]
+
+				// UploadFile("UploadDrive", filenams)
 				// log.Print(filenams)
 			}
 		}

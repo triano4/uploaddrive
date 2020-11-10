@@ -135,8 +135,7 @@ func createFile(service *drive.Service, name string, mimeType string, content io
 	return file, nil
 }
 
-// -------------------------------------------------------------------------------------------------------
-
+//UploadFile funtion
 func UploadFile(folderName string, fileName string) {
 
 	// Step 1. Open the file
