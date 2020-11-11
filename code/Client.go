@@ -4,16 +4,15 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
-	"net/http"
-	
-	
+
 	"github.com/emersion/go-imap"
 	"github.com/emersion/go-imap/client"
 	"github.com/emersion/go-message"
 )
 
+// w http.ResponseWriter, r *http.Request
 //Client Function
-func Client(w http.ResponseWriter, r *http.Request) {
+func Client() {
 	log.Println("Connecting to server...")
 
 	c, err := client.DialTLS("imap.gmail.com:993", nil)
@@ -69,7 +68,7 @@ func Client(w http.ResponseWriter, r *http.Request) {
 					log.Fatal(cErr)
 				}
 
-				if kind != "application/pdf" && kind != "application/doc" {
+				if kind != "application/pdf" && kind != "application/vnd.openxmlformats-officedocument.wordprocessingml.document" {
 					continue
 				}
 
@@ -80,11 +79,6 @@ func Client(w http.ResponseWriter, r *http.Request) {
 
 				log.Printf("Dump file %s", params["name"])
 
-				// err := os.Mkdir("attacment1", 0755)
-				// if err != nil {
-				// 	log.Fatal(err)
-				// }
-
 				if fErr := ioutil.WriteFile("attachment/"+params["name"], c, 0777); fErr != nil {
 					log.Fatal(fErr)
 				}
@@ -93,8 +87,8 @@ func Client(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	UploadFile()
-	DeleteFile()
+	// UploadFile()
+	// DeleteFile()
 
 	if err := <-done; err != nil {
 		log.Fatal(err)
@@ -103,4 +97,3 @@ func Client(w http.ResponseWriter, r *http.Request) {
 	log.Println("Done")
 
 }
-
