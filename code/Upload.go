@@ -100,11 +100,11 @@ func getService() (*drive.Service, error) {
 
 //-----------------------------------------------------------------------------------------------------
 //  create directory  in drive
-func createDir(service *drive.Service, name string, parentId string) (*drive.File, error) {
+func createDir(service *drive.Service, name string, parentID string) (*drive.File, error) {
 	d := &drive.File{
 		Name:     name,
 		MimeType: "application/vnd.google-apps.folder",
-		Parents:  []string{parentId},
+		Parents:  []string{parentID},
 	}
 
 	file, err := service.Files.Create(d).Do()
@@ -119,11 +119,11 @@ func createDir(service *drive.Service, name string, parentId string) (*drive.Fil
 
 //------------------------------------------------------------------------------------------------------
 //  create file to upload to drive
-func createFile(service *drive.Service, name string, mimeType string, content io.Reader, parentId string) (*drive.File, error) {
+func createFile(service *drive.Service, name string, mimeType string, content io.Reader, parentID string) (*drive.File, error) {
 	f := &drive.File{
 		MimeType: mimeType,
 		Name:     name,
-		Parents:  []string{parentId},
+		Parents:  []string{parentID},
 	}
 	file, err := service.Files.Create(f).Media(content).Do()
 
@@ -135,20 +135,19 @@ func createFile(service *drive.Service, name string, mimeType string, content io
 	return file, nil
 }
 
-// -------------------------------------------------------------------------------------------------------
-
+//UploadFile function
 func UploadFile() {
 
 	var files []string
-	    fileInfo, err := ioutil.ReadDir("./attachment")
-	    if err != nil {
-	        fmt.Println (files, err)
-	    }
-	
-	    for _, file := range fileInfo {
-	        files = append(files, file.Name())
-		}
-	
+	fileInfo, err := ioutil.ReadDir("./attachment")
+	if err != nil {
+		fmt.Println(files, err)
+	}
+
+	for _, file := range fileInfo {
+		files = append(files, file.Name())
+	}
+
 	// ===================================
 	// Step 2. Get the Google Drive service
 	service, err := getService()
@@ -164,9 +163,8 @@ func UploadFile() {
 	for i, s := range files {
 		fmt.Println(i, s)
 
-
 		// Step 1. Open the file
-		f, err := os.Open("./attachment/"+s)
+		f, err := os.Open("./attachment/" + s)
 
 		if err != nil {
 			panic(fmt.Sprintf("cannot open file: %v", err))
@@ -197,5 +195,5 @@ func UploadFile() {
 		}
 
 		fmt.Printf("File '%s' successfully uploaded in '%s' directory", file.Name, dir.Name)
-	}	
+	}
 }
