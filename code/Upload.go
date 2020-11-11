@@ -135,39 +135,67 @@ func createFile(service *drive.Service, name string, mimeType string, content io
 	return file, nil
 }
 
-//UploadFile funtion
-func UploadFile(folderName string, fileName string) {
+// -------------------------------------------------------------------------------------------------------
 
-	// Step 1. Open the file
-	f, err := os.Open(fileName)
+func UploadFile() {
 
-	if err != nil {
-		panic(fmt.Sprintf("cannot open file: %v", err))
-	}
-
-	defer f.Close()
-
+	var files []string
+	    fileInfo, err := ioutil.ReadDir("./attachment")
+	    if err != nil {
+	        fmt.Println (files, err)
+	    }
+	
+	    for _, file := range fileInfo {
+	        files = append(files, file.Name())
+		}
+	
+	// ===================================
 	// Step 2. Get the Google Drive service
 	service, err := getService()
 
 	// Step 3. Create the directory
-	dir, err := createDir(service, folderName, "root")
+	dir, err := createDir(service, "Attachment", "root")
 
 	if err != nil {
 		panic(fmt.Sprintf("Could not create dir: %v\n", err))
 	}
+	// ------------------------------------------------------
+	// a := []string{"Foo", "Bar"}
+	for i, s := range files {
+		fmt.Println(i, s)
 
-	//  contentType, err := GetFileContentType(f)
-	//  if err != nil {
-	// 	 panic(err)
-	//  }
 
-	// Step 4. Create the file and upload its content
-	file, err := createFile(service, fileName, "application/pdf", f, dir.Id)
+		// Step 1. Open the file
+		f, err := os.Open("./attachment/"+s)
 
-	if err != nil {
-		panic(fmt.Sprintf("Could not create file: %v\n", err))
-	}
+		if err != nil {
+			panic(fmt.Sprintf("cannot open file: %v", err))
+		}
 
-	fmt.Printf("File '%s' successfully uploaded in '%s' directory", file.Name, dir.Name)
+		defer f.Close()
+
+		// Step 2. Get the Google Drive service
+		service, err := getService()
+
+		// Step 3. Create the directory
+		// dir, err := createDir(service, folderName, "root")
+
+		// if err != nil {
+		// 	panic(fmt.Sprintf("Could not create dir: %v\n", err))
+		// }
+
+		//  contentType, err := GetFileContentType(f)
+		//  if err != nil {
+		// 	 panic(err)
+		//  }
+
+		// Step 4. Create the file and upload its content
+		file, err := createFile(service, s, "application/pdf", f, dir.Id)
+
+		if err != nil {
+			panic(fmt.Sprintf("Could not create file: %v\n", err))
+		}
+
+		fmt.Printf("File '%s' successfully uploaded in '%s' directory", file.Name, dir.Name)
+	}	
 }

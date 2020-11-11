@@ -4,7 +4,7 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
-	"net/http"
+	// "net/http"
 
 	"github.com/emersion/go-imap"
 	"github.com/emersion/go-imap/client"
@@ -12,7 +12,7 @@ import (
 )
 
 //Client Function
-func Client(w http.ResponseWriter, r *http.Request) {
+func Client() {
 	log.Println("Connecting to server...")
 
 	c, err := client.DialTLS("imap.gmail.com:993", nil)
@@ -88,10 +88,7 @@ func Client(w http.ResponseWriter, r *http.Request) {
 					log.Fatal(fErr)
 				}
 
-				// var filenams = "./attachment/" + params["name"]
-
-				// UploadFile("UploadDrive", filenams)
-				// log.Print(filenams)
+				
 			}
 		}
 	}
@@ -103,3 +100,4 @@ func Client(w http.ResponseWriter, r *http.Request) {
 	log.Println("Done")
 
 }
+
