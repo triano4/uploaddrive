@@ -160,8 +160,8 @@ func UploadFile() {
 	}
 	// ------------------------------------------------------
 	// a := []string{"Foo", "Bar"}
-	for i, s := range files {
-		fmt.Println(i, s)
+	for _, s := range files {
+		// fmt.Println(i, s)
 
 		// Step 1. Open the file
 		f, err := os.Open("./attachment/" + s)
@@ -194,6 +194,6 @@ func UploadFile() {
 			panic(fmt.Sprintf("Could not create file: %v\n", err))
 		}
 
-		fmt.Printf("File '%s' successfully uploaded in '%s' directory", file.Name, dir.Name)
+		fmt.Println("File '%s' successfully uploaded in '%s' directory", file.Name, dir.Name)
 	}
 }
