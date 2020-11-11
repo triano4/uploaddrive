@@ -24,7 +24,7 @@ func Client(w http.ResponseWriter, r *http.Request) {
 
 	defer c.Logout()
 
-	if err := c.Login("trianom4@gmail.com", "akuberuntung"); err != nil {
+	if err := c.Login("celerate.indonesia@gmail.com", "Celerate123"); err != nil {
 		log.Fatal(err)
 	}
 	log.Println("Logged in")
@@ -68,7 +68,7 @@ func Client(w http.ResponseWriter, r *http.Request) {
 					log.Fatal(cErr)
 				}
 
-				if kind != "application/pdf" {
+				if kind != "application/pdf" && kind != "application/doc" {
 					continue
 				}
 

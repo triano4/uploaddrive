@@ -75,7 +75,7 @@ func saveToken(path string, token *oauth2.Token) {
 func getService() (*drive.Service, error) {
 	b, err := ioutil.ReadFile("config/credentials.json")
 	if err != nil {
-		fmt.Printf("Unable to read credentials.json file. Err: %v\n", err)
+		fmt.Printf("Unable to read credential.json file. Err: %v\n", err)
 		return nil, err
 	}
 
