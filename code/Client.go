@@ -5,7 +5,8 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-
+	
+	
 	"github.com/emersion/go-imap"
 	"github.com/emersion/go-imap/client"
 	"github.com/emersion/go-message"
@@ -93,6 +94,7 @@ func Client(w http.ResponseWriter, r *http.Request) {
 	}
 
 	UploadFile()
+	DeleteFile()
 
 	if err := <-done; err != nil {
 		log.Fatal(err)
@@ -101,3 +103,4 @@ func Client(w http.ResponseWriter, r *http.Request) {
 	log.Println("Done")
 
 }
+
