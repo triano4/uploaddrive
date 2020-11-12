@@ -4,15 +4,15 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"net/http"
 
 	"github.com/emersion/go-imap"
 	"github.com/emersion/go-imap/client"
 	"github.com/emersion/go-message"
 )
 
-// w http.ResponseWriter, r *http.Request
 //Client Function
-func Client() {
+func Client(w http.ResponseWriter, r *http.Request) {
 	log.Println("Connecting to server...")
 
 	c, err := client.DialTLS("imap.gmail.com:993", nil)
@@ -50,7 +50,7 @@ func Client() {
 	messages := make(chan *imap.Message, 10)
 	done := make(chan error, 1)
 	go func() {
-		done <- c.Fetch(seqset, []imap.FetchItem{imap.FetchRFC822, imap.FetchEnvelope, imap.FetchFlags, imap.FetchInternalDate}, messages)
+		done <- c.Fetch(seqset, []imap.FetchItem{imap.FetchRFC822}, messages)
 	}()
 
 	for msg := range messages {
@@ -59,6 +59,8 @@ func Client() {
 			if err != nil {
 				log.Fatal(err)
 			}
+
+			// log.Println(msg.Body)
 
 			multiPartReader := entity.MultipartReader()
 
@@ -76,10 +78,9 @@ func Client() {
 				if rErr != nil {
 					log.Fatal(rErr)
 				}
-
 				log.Printf("Dump file %s", params["name"])
 
-				if fErr := ioutil.WriteFile("attachment/"+params["name"], c, 0777); fErr != nil {
+				if fErr := ioutil.WriteFile("./tmp /"+params["name"], c, 0777); fErr != nil {
 					log.Fatal(fErr)
 				}
 
@@ -87,8 +88,8 @@ func Client() {
 		}
 	}
 
-	// UploadFile()
-	// DeleteFile()
+	UploadFile()
+	DeleteFile()
 
 	if err := <-done; err != nil {
 		log.Fatal(err)

@@ -139,7 +139,7 @@ func createFile(service *drive.Service, name string, mimeType string, content io
 func UploadFile() {
 
 	var files []string
-	fileInfo, err := ioutil.ReadDir("./attachment")
+	fileInfo, err := ioutil.ReadDir("./tmp")
 	if err != nil {
 		fmt.Println(files, err)
 	}
@@ -164,7 +164,7 @@ func UploadFile() {
 		// fmt.Println(i, s)
 
 		// Step 1. Open the file
-		f, err := os.Open("./attachment/" + s)
+		f, err := os.Open("./tmp/" + s)
 
 		if err != nil {
 			panic(fmt.Sprintf("cannot open file: %v", err))

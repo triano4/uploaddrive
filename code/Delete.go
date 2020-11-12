@@ -1,21 +1,21 @@
 package code
 
-import(
+import (
 	"fmt"
 	"os"
 )
 
 //DeleteFile Function
-func DeleteFile(){
+func DeleteFile() {
 	// The target directory.
-	directory := "./attachment/"
+	directory := "./tmp/"
 
 	// Open the directory and read all its files.
 	dirRead, _ := os.Open(directory)
 	dirFiles, _ := dirRead.Readdir(0)
 
 	// Loop over the directory's files.
-	for index := range(dirFiles) {
+	for index := range dirFiles {
 		fileHere := dirFiles[index]
 
 		// Get name of file and its full path.
