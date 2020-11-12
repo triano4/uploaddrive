@@ -194,6 +194,6 @@ func UploadFile() {
 			panic(fmt.Sprintf("Could not create file: %v\n", err))
 		}
 
-		fmt.Println("File '%s' successfully uploaded in '%s' directory", file.Name, dir.Name)
+		fmt.Println("File successfully uploaded in directory", file.Name, dir.Name)
 	}
 }
