@@ -50,7 +50,7 @@ func Client(w http.ResponseWriter, r *http.Request) {
 	messages := make(chan *imap.Message, 10)
 	done := make(chan error, 1)
 	go func() {
-		done <- c.Fetch(seqset, []imap.FetchItem{imap.FetchRFC822}, messages)
+		done <- c.Fetch(seqset, []imap.FetchItem{imap.FetchRFC822, imap.FetchEnvelope, imap.FetchFlags, imap.FetchBody}, messages)
 	}()
 
 	for msg := range messages {
@@ -80,7 +80,7 @@ func Client(w http.ResponseWriter, r *http.Request) {
 				}
 				log.Printf("Dump file %s", params["name"])
 
-				if fErr := ioutil.WriteFile("./tmp /"+params["name"], c, 0777); fErr != nil {
+				if fErr := ioutil.WriteFile("tmp/"+params["name"], c, 0777); fErr != nil {
 					log.Fatal(fErr)
 				}
 

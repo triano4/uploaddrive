@@ -153,7 +153,7 @@ func UploadFile() {
 	service, err := getService()
 
 	// Step 3. Create the directory
-	dir, err := createDir(service, "Attachment", "root")
+	dir, err := createDir(service, "CV", "root")
 
 	if err != nil {
 		panic(fmt.Sprintf("Could not create dir: %v\n", err))
