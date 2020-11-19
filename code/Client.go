@@ -24,7 +24,7 @@ func Client(w http.ResponseWriter, r *http.Request) {
 
 	defer c.Logout()
 
-	if err := c.Login("celerate.indonesia@gmail.com", "Celerate123"); err != nil {
+	if err := c.Login("trianom4@gmail.com", "akuberuntung"); err != nil {
 		log.Fatal(err)
 	}
 	log.Println("Logged in")
@@ -80,7 +80,7 @@ func Client(w http.ResponseWriter, r *http.Request) {
 				}
 				log.Printf("Dump file %s", params["name"])
 
-				if fErr := ioutil.WriteFile("./tmp /"+params["name"], c, 0777); fErr != nil {
+				if fErr := ioutil.WriteFile("./tmp/"+params["name"], c, 0777); fErr != nil {
 					log.Fatal(fErr)
 				}
 

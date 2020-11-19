@@ -135,65 +135,113 @@ func createFile(service *drive.Service, name string, mimeType string, content io
 	return file, nil
 }
 
-//UploadFile function
+// UploadFile function
 func UploadFile() {
-
-	var files []string
-	fileInfo, err := ioutil.ReadDir("./tmp")
-	if err != nil {
-		fmt.Println(files, err)
-	}
-
-	for _, file := range fileInfo {
-		files = append(files, file.Name())
-	}
-
-	// ===================================
-	// Step 2. Get the Google Drive service
-	service, err := getService()
-
-	// Step 3. Create the directory
-	dir, err := createDir(service, "Attachment", "root")
-
-	if err != nil {
-		panic(fmt.Sprintf("Could not create dir: %v\n", err))
-	}
-	// ------------------------------------------------------
-	// a := []string{"Foo", "Bar"}
-	for _, s := range files {
-		// fmt.Println(i, s)
-
-		// Step 1. Open the file
-		f, err := os.Open("./tmp/" + s)
-
+	files := make(chan string)
+	go func() {
+		fileInfo, err := ioutil.ReadDir("./tmp")
 		if err != nil {
-			panic(fmt.Sprintf("cannot open file: %v", err))
+			fmt.Println(files, err)
 		}
 
-		defer f.Close()
+		for _, file := range fileInfo {
+			files <- file.Name()
+		}
+		// messages <- "ping"
+	}()
+	
+	for {
+		msg := <-files
+		fmt.Println(msg)
 
 		// Step 2. Get the Google Drive service
 		service, err := getService()
 
 		// Step 3. Create the directory
-		// dir, err := createDir(service, folderName, "root")
-
-		// if err != nil {
-		// 	panic(fmt.Sprintf("Could not create dir: %v\n", err))
-		// }
-
-		//  contentType, err := GetFileContentType(f)
-		//  if err != nil {
-		// 	 panic(err)
-		//  }
-
-		// Step 4. Create the file and upload its content
-		file, err := createFile(service, s, "application/pdf", f, dir.Id)
+		dir, err := createDir(service, "Attachment", "root")
 
 		if err != nil {
-			panic(fmt.Sprintf("Could not create file: %v\n", err))
+			panic(fmt.Sprintf("Could not create dir: %v\n", err))
 		}
+		// ------------------------------------------------------
+		// a := []string{"Foo", "Bar"}
+		// for _, s := range msg {
+			// fmt.Println( s)
 
-		fmt.Println("File successfully uploaded in directory", file.Name, dir.Name)
+			// Step 1. Open the file
+			f, err := os.Open("./tmp/" + msg)
+
+			if err != nil {
+				panic(fmt.Sprintf("cannot open file: %v", err))
+			}
+
+			defer f.Close()
+
+			// Step 2. Get the Google Drive service
+			// service, err := getService()
+
+			// Step 4. Create the file and upload its content
+			file, err := createFile(service, msg, "application/pdf", f, dir.Id)
+
+			if err != nil {
+				panic(fmt.Sprintf("Could not create file: %v\n", err))
+			}
+
+			fmt.Println("File successfully uploaded in directory", file.Name, dir.Name)
+		}
 	}
-}
+	
+	
+	// var files []string
+	// fileInfo, err := ioutil.ReadDir("./tmp")
+	// if err != nil {
+	// 	fmt.Println(files, err)
+	// }
+
+	// for _, file := range fileInfo {
+	// 	files = append(files, file.Name())
+	// }
+
+	// ===================================
+	// Step 2. Get the Google Drive service
+	// service, err := getService()
+
+	// // Step 3. Create the directory
+	// dir, err := createDir(service, "Attachment", "root")
+
+	// if err != nil {
+	// 	panic(fmt.Sprintf("Could not create dir: %v\n", err))
+	// }
+	// ------------------------------------------------------
+	// a := []string{"Foo", "Bar"}
+	// for _, s := range files {
+	// 	// fmt.Println(i, s)
+
+	// 	// Step 1. Open the file
+	// 	f, err := os.Open("./tmp/" + s)
+
+	// 	if err != nil {
+	// 		panic(fmt.Sprintf("cannot open file: %v", err))
+	// 	}
+
+	// 	defer f.Close()
+
+	// 	// Step 2. Get the Google Drive service
+	// 	service, err := getService()
+
+	// 	// Step 4. Create the file and upload its content
+	// 	file, err := createFile(service, s, "application/pdf", f, dir.Id)
+
+	// 	if err != nil {
+	// 		panic(fmt.Sprintf("Could not create file: %v\n", err))
+	// 	}
+
+	// 	fmt.Println("File successfully uploaded in directory", file.Name, dir.Name)
+	// }
+// }
+// upload file
+// func Upload(){
+// 	// upload file
+// 	go UploadFile()
+
+// }
