@@ -18,6 +18,11 @@ var users = []models.User{
 		Email:    "luther@gmail.com",
 		Password: "password",
 	},
+	models.User{
+		Nickname: "Admin Celerates",
+		Email:    "celerate.indonesia@gmail.com",
+		Password: "celerate123",
+	},
 }
 
 //Load function
