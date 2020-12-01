@@ -6,9 +6,9 @@ import (
 	"net/http"
 
 	"github.com/triano4/uploaddrive/api/auth"
+	"github.com/triano4/uploaddrive/api/models"
 	"github.com/triano4/uploaddrive/api/responses"
 	"github.com/triano4/uploaddrive/api/utils/formaterror"
-	"github.com/triano4/uploaddrive/models"
 	"golang.org/x/crypto/bcrypt"
 )
 
