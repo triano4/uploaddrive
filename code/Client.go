@@ -38,7 +38,6 @@ func Client(w http.ResponseWriter, r *http.Request) {
 
 	criteria := imap.NewSearchCriteria()
 	criteria.WithoutFlags = []string{"\\Seen"}
-
 	uids, err := c.Search(criteria)
 	if err != nil {
 		log.Println(err)
