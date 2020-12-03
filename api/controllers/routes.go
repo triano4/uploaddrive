@@ -1,6 +1,9 @@
 package controllers
 
-import "github.com/triano4/uploaddrive/api/middlewares"
+import (
+	"github.com/triano4/uploaddrive/api/middlewares"
+	"github.com/triano4/uploaddrive/code"
+)
 
 func (s *Server) initializeRoutes() {
 
@@ -16,5 +19,8 @@ func (s *Server) initializeRoutes() {
 	s.Router.HandleFunc("/users/{id}", middlewares.SetMiddlewareJSON(s.GetUser)).Methods("GET")
 	s.Router.HandleFunc("/users/{id}", middlewares.SetMiddlewareJSON(middlewares.SetMiddlewareAuthentication(s.UpdateUser))).Methods("PUT")
 	s.Router.HandleFunc("/users/{id}", middlewares.SetMiddlewareAuthentication(s.DeleteUser)).Methods("DELETE")
+
+	//Other routes
+	s.Router.HandleFunc("/file", middlewares.SetMiddlewareAuthentication(code.Client))
 
 }
