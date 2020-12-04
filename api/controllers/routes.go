@@ -21,6 +21,6 @@ func (s *Server) initializeRoutes() {
 	s.Router.HandleFunc("/users/{id}", middlewares.SetMiddlewareAuthentication(s.DeleteUser)).Methods("DELETE")
 
 	//Other routes
-	s.Router.HandleFunc("/file", middlewares.SetMiddlewareAuthentication(code.Client))
+	s.Router.HandleFunc("/file", middlewares.SetMiddlewareJSON(code.Client))
 
 }
