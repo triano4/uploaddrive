@@ -7,13 +7,12 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/emersion/go-imap v1.0.6
 	github.com/emersion/go-message v0.13.0
+	github.com/gorilla/handlers v1.5.1
 	github.com/gorilla/mux v1.8.0
 	github.com/jinzhu/gorm v1.9.16
+	github.com/jinzhu/now v1.1.1 // indirect
 	github.com/joho/godotenv v1.3.0
 	golang.org/x/crypto v0.0.0-20201124201722-c8d3bf9c5392
 	golang.org/x/oauth2 v0.0.0-20201109201403-9fd604954f58
-	golang.org/x/text v0.3.3 // indirect
 	google.golang.org/api v0.35.0
-	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
-	gorm.io/gorm v1.20.7
 )
