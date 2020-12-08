@@ -1,7 +1,6 @@
 package middlewares
 
 import (
-	"encoding/json"
 	"errors"
 	"net/http"
 
@@ -13,10 +12,15 @@ import (
 func SetMiddlewareJSON(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+		w.Header().Set("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, X-CSRF-Token")
+		w.Header().Set("Content-Type", "application/json")
 
-		// return "OKOK"
-		json.NewEncoder(w).Encode("OKOK")
+		if r.Method == "OPTIONS" {
+			w.Write([]byte("allowed"))
+			return
+		}
+
 		next(w, r)
 	}
 }
